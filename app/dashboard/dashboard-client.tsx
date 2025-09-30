@@ -1,14 +1,19 @@
 "use client";
 import { signOut } from "@/lib/actions/actions";
+import { auth } from "@/lib/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+type Session = typeof auth.$Infer.Session
 
-export default function DashboardClientPage() {
+export default function DashboardClientPage({session}: {session: Session | null}) {
   const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false)
   const router = useRouter();
   
+  console.log(session)
+  
+  const {name, email, emailVerified} = session?.user || {}
 
   // Redirect to auth if not authenticated
 
@@ -47,13 +52,13 @@ export default function DashboardClientPage() {
                     }
                   />
                   <div className="text-sm">
-                    <p className="text-gray-900 font-medium">John Doe</p>
-                    <p className="text-gray-500">email@gmail.com</p>
+                    <p className="text-gray-900 font-medium">{ name}</p>
+                    <p className="text-gray-500">{email}</p>
                   </div>
                 </div>
                 <button
                   onClick={handleSignOut}
-                  className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+                  className="cursor-pointer inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
                 >
                   {isLoggingOut ? 'Signing Out' : "Sign Out"}
                 </button>
@@ -84,7 +89,7 @@ export default function DashboardClientPage() {
                   <span className="font-medium text-blue-700">
                     Email Verified:
                   </span>
-                  <span className="ml-2 text-blue-600">Yes</span>
+                  <span className="ml-2 text-blue-600">{emailVerified ? 'Yes' : 'No'}</span>
                 </div>
               </div>
             </div>
@@ -202,12 +207,12 @@ export default function DashboardClientPage() {
                 >
                   ← Back to Home
                 </Link>
-                <Link
+                {/*<Link
                   href="/auth"
                   className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
                 >
                   Manage Account
-                </Link>
+                </Link>*/}
               </div>
             </div>
           </div>

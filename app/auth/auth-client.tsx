@@ -60,9 +60,6 @@ export default function AuthClientPage() {
       );
     } finally {
       setIsLoading(false);
-      // setEmail('');
-      // setPassword('');
-      // setName('');
     }
   };
 
