@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { signIn, signUp } from "@/lib/actions/actions";
+import { signIn, signInWithSocial, signUp } from "@/lib/actions/actions";
 
 export default function AuthClientPage() {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -21,13 +21,19 @@ export default function AuthClientPage() {
     setError("");
 
     try {
-      console.log("Logged in with", provider);
+      if(provider === 'google') {
+        await signInWithSocial('google')
+      } else {
+        
+      }
+      // console.log("Logged in with", provider);
     } catch (err) {
       setError(
         `Error authenticating with ${provider}: ${
           err instanceof Error ? err.message : "Unknown error"
         }`
       );
+      console.log(error)
     } finally {
       setIsLoading(false);
     }

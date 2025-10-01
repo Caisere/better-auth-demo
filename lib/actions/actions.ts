@@ -2,6 +2,7 @@
 
 import { headers } from "next/headers"
 import { auth } from "../auth"
+import { redirect } from "next/navigation"
 
 export async function signUp(email: string, password:string, name: string) {
     const result = await auth.api.signUpEmail({
@@ -31,4 +32,17 @@ export async function signIn (email: string, password: string) {
 export async function signOut () {
   const result = await auth.api.signOut({headers: await headers()})
   return result;
+}
+
+export async function signInWithSocial(provider: 'google' | 'github') {
+  const {url} = await auth.api.signInSocial({
+    body: {
+      provider,
+      callbackURL: '/dashboard'
+    }
+  })
+  
+  if (url) {
+    redirect(url)
+  }
 }
