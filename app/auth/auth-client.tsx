@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, MouseEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn, signInWithSocial, signUp } from "@/lib/actions/actions";
 
 export default function AuthClientPage() {
+  const [position, setPosition] = useState({x:0, y:0})
   const [isSignIn, setIsSignIn] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,6 +16,17 @@ export default function AuthClientPage() {
   const searchParams = useSearchParams();
 
   
+  // useEffect(() => {
+  //   function handlePosition (e:PointerEvent) {
+  //     setPosition({x:e.clientX, y:e.clientY})
+  //   }
+  //   window.addEventListener('pointermove', handlePosition);
+    
+  //   return () => {
+  //     window.removeEventListener('pointermove', handlePosition)
+  //   }
+  // }, [])
+  
   // Get callback URL from search params (set by middleware)
   const handleSocialAuth = async (provider: "google" | "github") => {
     setIsLoading(true);
@@ -24,7 +36,7 @@ export default function AuthClientPage() {
       if(provider === 'google') {
         await signInWithSocial('google')
       } else {
-        
+        await signInWithSocial('github')
       }
       // console.log("Logged in with", provider);
     } catch (err) {
@@ -68,6 +80,8 @@ export default function AuthClientPage() {
       setIsLoading(false);
     }
   };
+  
+  // console.log(position)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">

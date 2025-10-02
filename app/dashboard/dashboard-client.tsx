@@ -13,7 +13,7 @@ export default function DashboardClientPage({session}: {session: Session | null}
   
   console.log(session)
   
-  const {name, email, emailVerified} = session?.user || {}
+  const {name, email, emailVerified, image} = session?.user || {}
 
   // Redirect to auth if not authenticated
 
@@ -47,7 +47,7 @@ export default function DashboardClientPage({session}: {session: Session | null}
                 <div className="flex items-center space-x-3">
                   <img
                     className="h-10 w-10 rounded-full"
-                    src={
+                    src={image ||
                       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
                     }
                   />

@@ -41,7 +41,7 @@ export async function signInWithSocial(provider: 'google' | 'github') {
       callbackURL: '/dashboard'
     }
   })
-  
+  console.log('url', url)
   if (url) {
     redirect(url)
   }
