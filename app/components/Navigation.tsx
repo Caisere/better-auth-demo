@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 // import { Session } from "better-auth";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ToggleMode from "./togglemode";
 
 type Session = typeof auth.$Infer.Session 
 
@@ -43,6 +44,9 @@ export default function Navigation({session}: {session:Session | null}) {
             </span>
           </Link>
 
+          <div className="flex items-center space-x-6">
+            
+          
           <nav className="flex items-center space-x-6">
             <Link
               href="/"
@@ -73,6 +77,8 @@ export default function Navigation({session}: {session:Session | null}) {
               </Link>
               )}
           </nav>
+          {session?.user && <ToggleMode />}
+          </div>
         </div>
       </div>
     </header>

@@ -4,6 +4,7 @@ import "./globals.css";
 import Navigation from "./components/Navigation";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
+import { ThemeProvider } from "next-themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,12 +31,15 @@ export default async function RootLayout({
   });
   return (
   
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navigation session={session} />
-        {children}
+        <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+          <Navigation session={session} />
+          {children}
+        </ThemeProvider>
+        
       </body>
     </html>
   );
